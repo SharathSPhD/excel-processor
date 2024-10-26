@@ -19,6 +19,9 @@ class ExcelProcessor:
         Args:
             config: Configuration dictionary
         """
+        if config is None:
+            raise ValueError("Config cannot be None")
+        
         self.config = config
         self.excel_reader = None
         self.formula_processor = FormulaProcessor(config)
@@ -44,6 +47,9 @@ class ExcelProcessor:
         Returns:
             Dictionary containing processing results
         """
+        if self.config is None:
+            raise ValueError("Config cannot be None")
+        
         try:
             self.logger.info(f"Processing Excel file: {excel_path}")
             

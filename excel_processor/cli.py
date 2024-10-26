@@ -47,7 +47,8 @@ def process(
             config['logging']['level'] = 'DEBUG'
         
         # Setup logging
-        setup_logging(config)
+        if config is not None:
+            setup_logging(config)
         logger = logging.getLogger(__name__)
         
         # Initialize processor

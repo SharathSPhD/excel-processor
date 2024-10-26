@@ -47,3 +47,10 @@ def test_error_handling_workflow(create_test_excel, sample_config, tmp_path):
     
     error_msg = str(exc_info.value)
     assert 'InvalidFunction' in error_msg or 'Circular' in error_msg
+
+def test_process_file_with_none_config(simple_excel_file, tmp_path):
+    """Test that process_file raises ValueError when config is None."""
+    
+    with pytest.raises(ValueError, match="Config cannot be None"):
+        processor = ExcelProcessor(None)
+        processor.process_file(simple_excel_file, tmp_path)
