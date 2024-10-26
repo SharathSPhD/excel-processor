@@ -8,6 +8,7 @@ from excel_processor.utils.validation_utils import (
     validate_formula_syntax,
     generate_validation_report
 )
+from excel_processor.models.formula import Formula, FormulaType
 
 def test_validate_numeric_range():
     # Test valid range

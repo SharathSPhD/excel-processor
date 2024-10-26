@@ -69,7 +69,7 @@ def test_formula_evaluation_error(sample_config, sample_data):
     )
     processor.formula_cache['Sheet1.C'] = formula
     
-    with pytest.raises(ValueError, match="Formula evaluation error"):
+    with pytest.raises(ValueError, match="Error processing formula =Invalid: invalid_code"):
         processor.process(sample_data)
 
 def test_lookup_formula_handling(sample_config):

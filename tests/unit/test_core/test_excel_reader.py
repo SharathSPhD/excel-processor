@@ -38,6 +38,6 @@ def test_extract_formulas(simple_excel_file):
     assert sheet2.formulas['Reference'] == '=Sheet1!Formula1'
 
 def test_invalid_excel_file():
-    with pytest.raises(FileNotFoundError):
+    with pytest.raises(ValueError, match="Error reading Excel file: Excel file not found: nonexistent.xlsx"):
         reader = ExcelReader('nonexistent.xlsx')
         reader.read_workbook()
