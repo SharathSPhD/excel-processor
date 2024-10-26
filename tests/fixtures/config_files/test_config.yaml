@@ -1,0 +1,67 @@
+# tests/fixtures/config_files/test_config.yaml
+excel_processor:
+  validation:
+    enabled: true
+    level: strict
+    tolerance: 1e-10
+    check_formulas: true
+    check_dependencies: true
+    compare_outputs: true
+    
+  output:
+    format: csv
+    directory: test_output
+    separate_sheets: true
+    include_metadata: true
+    
+  processing:
+    parallel: false
+    chunk_size: 1000
+    max_workers: 4
+    memory_limit: 1GB
+    
+  formula_handling:
+    nested_depth: unlimited
+    cache_intermediate: true
+    array_formula_support: true
+    
+  dependency_handling:
+    detect_cycles: true
+    max_depth: 20
+    resolve_order: topological
+    
+  logging:
+    level: DEBUG
+    file: test_processor.log
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    rotate: true
+    max_size: 10MB
+    
+  error_handling:
+    strict_mode: true
+    ignore_missing_refs: false
+    default_value: 0
+    error_log: test_errors.log
+
+# Create pytest fixtures for the test files
+@pytest.fixture(scope="session")
+def complex_formulas_excel():
+    """Create and return path to complex_formulas.xlsx"""
+    return create_complex_formulas_excel()
+
+@pytest.fixture(scope="session")
+def cross_references_excel():
+    """Create and return path to cross_references.xlsx"""
+    return create_cross_references_excel()
+
+@pytest.fixture(scope="session")
+def test_config_path():
+    """Return path to test configuration file"""
+    config_path = FIXTURES_DIR / 'config_files' / 'test_config.yaml'
+    
+    if not config_path.exists():
+        config_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(config_path, 'w') as f:
+            yaml.dump(yaml.safe_load(open(__file__).read().split('test_config.yaml')[1]), f)
+    
+    return config_path
