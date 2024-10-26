@@ -147,6 +147,15 @@ class FormulaConverter:
             return f'{array}.iloc[{row_num}-1, {col_num}-1]'
         return formula
     
+    def _convert_match(self, formula: str) -> str:
+        """Convert MATCH to pandas index/search."""
+        pattern = r'MATCH\((.*?),(.*?),(.*?)\)'
+        match = re.search(pattern, formula)
+        if match:
+            lookup_value, lookup_array, match_type = match.groups()
+            return f'(pd.Series({lookup_array}) == {lookup_value}).idxmax() + 1'
+        return formula
+    
     def _convert_concatenate(self, formula: str) -> str:
         """Convert CONCATENATE to string concatenation."""
         pattern = r'CONCATENATE\((.*?)\)'

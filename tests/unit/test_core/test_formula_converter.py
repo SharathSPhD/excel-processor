@@ -58,6 +58,18 @@ def test_hlookup():
     assert 'pd.merge' in formula.python_equivalent
     assert formula.formula_type == FormulaType.LOOKUP
 
+def test_match():
+    converter = FormulaConverter()
+    formula = converter.convert_formula(
+        '=MATCH(A1, B1:B10, 0)',
+        'Sheet1',
+        'F1'
+    )
+    
+    assert '(pd.Series' in formula.python_equivalent
+    assert 'idxmax() + 1' in formula.python_equivalent
+    assert formula.formula_type == FormulaType.LOOKUP
+
 def test_nested_functions():
     converter = FormulaConverter()
     formula = converter.convert_formula(
