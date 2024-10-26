@@ -124,6 +124,20 @@ class FormulaConverter:
                    f'how="left").iloc[:, {int(col_index)-1}]')
         return formula
     
+    def _convert_hlookup(self, formula: str) -> str:
+        """Convert HLOOKUP to pandas merge/lookup."""
+        pattern = r'HLOOKUP\((.*?),(.*?),(.*?),(.*?)\)'
+        match = re.search(pattern, formula)
+        if match:
+            lookup_value, table_array, row_index, exact_match = match.groups()
+            return (
+                f'pd.merge('
+                f'pd.DataFrame({lookup_value}).T, {table_array}.T, '
+                f'how="left").iloc[{int(row_index)-1}, 0]'
+                f'.fillna(0)'
+            )
+        return formula
+    
     def _convert_index(self, formula: str) -> str:
         """Convert INDEX to pandas iloc."""
         pattern = r'INDEX\((.*?),(.*?),(.*?)\)'

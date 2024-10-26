@@ -47,6 +47,17 @@ def test_vlookup():
     assert 'pd.merge' in formula.python_equivalent
     assert formula.formula_type == FormulaType.LOOKUP
 
+def test_hlookup():
+    converter = FormulaConverter()
+    formula = converter.convert_formula(
+        '=HLOOKUP(A1, Sheet2!A1:B2, 2, FALSE)',
+        'Sheet1',
+        'E1'
+    )
+    
+    assert 'pd.merge' in formula.python_equivalent
+    assert formula.formula_type == FormulaType.LOOKUP
+
 def test_nested_functions():
     converter = FormulaConverter()
     formula = converter.convert_formula(

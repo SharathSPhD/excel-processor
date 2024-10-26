@@ -135,3 +135,14 @@ def test_null_safe_functions():
     # Check if null-safe wrapper is applied
     assert 'if len' in formula.python_equivalent
     assert 'else 0' in formula.python_equivalent
+
+def test_hlookup():
+    """Test parsing of HLOOKUP function."""
+    parser = FormulaParser()
+    
+    formula_str = '=HLOOKUP(A1, Sheet2!A1:B2, 2, FALSE)'
+    formula = parser.parse(formula_str, 'Sheet1', 'Result')
+    
+    assert formula.formula_type == FormulaType.LOOKUP
+    assert 'pd.merge' in formula.python_equivalent
+    assert 'fillna(0)' in formula.python_equivalent
