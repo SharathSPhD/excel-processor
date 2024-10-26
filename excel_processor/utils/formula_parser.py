@@ -88,7 +88,7 @@ class FormulaParser:
             return f'str({text})[:int({num_chars})]'
         return formula
 
-    def _convert_right(self, formula: str) -> str):
+    def _convert_right(self, formula: str) -> str:
         """Convert RIGHT to string slicing."""
         pattern = r'RIGHT\((.*?),(\d+)\)'
         match = re.search(pattern, formula)
