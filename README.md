@@ -57,7 +57,7 @@ Full documentation available at `docs/`:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/excel-processor.git
+git clone https://github.com/SharathSPhD/excel-processor.git
 ```
 
 2. Install development dependencies:
