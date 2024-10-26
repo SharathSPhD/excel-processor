@@ -3,6 +3,7 @@ import pytest
 import pandas as pd
 from excel_processor.processors.data_processor import DataProcessor
 from excel_processor.models.dependency_graph import DependencyGraph
+from excel_processor.utils.formula_parser import FormulaParser
 
 def test_basic_data_processing(sample_config):
     dependency_graph = DependencyGraph()

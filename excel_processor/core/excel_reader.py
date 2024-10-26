@@ -116,7 +116,7 @@ class ExcelReader:
         for col_idx, header in enumerate(headers, 1):
             # Check first data row for formula
             cell = sheet.cell(row=2, column=col_idx)
-            if cell.formula:
+            if hasattr(cell, 'formula') and cell.formula:
                 formulas[header] = f"={cell.formula}"  # Ensure formula starts with =
             else:
                 input_columns.add(header)
@@ -137,7 +137,7 @@ class ExcelReader:
         """Validate that all formulas in a column are consistent."""
         for row in range(3, max_row + 1):  # Start from third row
             cell = sheet.cell(row=row, column=col_idx)
-            if cell.formula and f"={cell.formula}" != first_formula:
+            if hasattr(cell, 'formula') and cell.formula and f"={cell.formula}" != first_formula:
                 raise ValueError(
                     f"Inconsistent formulas in column {col_idx}: "
                     f"'{first_formula}' vs '={cell.formula}'"

@@ -27,6 +27,7 @@ def test_formula_processor_initialization(sample_config):
     assert processor.config == sample_config
     assert isinstance(processor.formula_cache, dict)
     assert len(processor.formula_cache) == 0
+    assert processor.formula_parser is not None  # Verify FormulaParser initialization
 
 def test_process_empty_formula_cache(sample_config, sample_data):
     """Test processing with empty formula cache."""

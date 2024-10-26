@@ -36,5 +36,5 @@ def test_invalid_config_format(tmp_path):
     with open(config_path, 'w') as f:
         f.write("invalid: yaml: content")
     
-    with pytest.raises(ValueError, match="Invalid configuration"):
+    with pytest.raises(ValueError, match="Invalid configuration format"):
         validate_config(config_path)

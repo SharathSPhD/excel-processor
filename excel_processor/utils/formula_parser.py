@@ -29,6 +29,15 @@ class FormulaParser:
             'np.min': 'lambda x: np.min(x) if len(x) > 0 else 0'
         }
     
+    def _convert_if(self, formula: str) -> str:
+        """Convert Excel IF function to numpy.where."""
+        pattern = r'IF\((.*?),(.*?),(.*?)\)'
+        match = re.search(pattern, formula)
+        if match:
+            condition, true_value, false_value = match.groups()
+            return f'np.where({condition}, {true_value}, {false_value})'
+        return formula
+
     def _convert_hlookup(self, formula: str) -> str:
         """Convert HLOOKUP to pandas merge/lookup."""
         pattern = r'HLOOKUP\((.*?),(.*?),(.*?),(.*?)\)'
@@ -79,7 +88,7 @@ class FormulaParser:
             return f'str({text})[:int({num_chars})]'
         return formula
 
-    def _convert_right(self, formula: str) -> str:
+    def _convert_right(self, formula: str) -> str):
         """Convert RIGHT to string slicing."""
         pattern = r'RIGHT\((.*?),(\d+)\)'
         match = re.search(pattern, formula)
