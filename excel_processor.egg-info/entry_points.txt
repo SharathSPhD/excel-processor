@@ -1,0 +1,2 @@
+[console_scripts]
+excel-processor = excel_processor.cli:cli

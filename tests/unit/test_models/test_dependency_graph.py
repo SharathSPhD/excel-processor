@@ -44,5 +44,5 @@ def test_circular_dependency_detection():
     graph.add_dependency("Sheet1.A", "Sheet1.B")
     graph.add_dependency("Sheet1.B", "Sheet1.A")
     
-    with pytest.raises(ValueError, match="Circular dependencies detected"):
+    with pytest.raises(ValueError, match="Circular dependency: Sheet1.A -> Sheet1.B -> Sheet1.A"):
         graph.get_processing_order()
