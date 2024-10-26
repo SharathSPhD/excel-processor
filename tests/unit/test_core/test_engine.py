@@ -48,3 +48,12 @@ def test_process_file_with_errors(create_test_excel, sample_config, tmp_path):
     processor = ExcelProcessor(sample_config)
     with pytest.raises(ValueError):
         processor.process_file(excel_file, tmp_path)
+
+def test_excel_processor_constructor_with_none_config():
+    with pytest.raises(ValueError, match="Config cannot be None"):
+        ExcelProcessor(None)
+
+def test_process_file_with_none_config(simple_excel_file, tmp_path):
+    with pytest.raises(ValueError, match="Config cannot be None"):
+        processor = ExcelProcessor(None)
+        processor.process_file(simple_excel_file, tmp_path)
